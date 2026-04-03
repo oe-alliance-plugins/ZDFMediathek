@@ -1,0 +1,18 @@
+{
+  "branch": "main",
+  "depends_recipe": "",
+  "description_control": "Zugriff auf die ZDF-Mediathek",
+  "description_recipe": "Zugriff auf die ZDF-Mediathek",
+  "history_source_dir": "zdfmediathek",
+  "internal_package_name": "enigma2-plugin-extensions-zdfmediathek",
+  "module_dir_name": "ZDFMediathek",
+  "output_subdir": "zdfmediathek",
+  "package_name": "enigma2-plugin-extensions-zdfmediathek",
+  "plugin_src_rel": "zdfmediathek",
+  "python_package": "ZDFMediathek",
+  "rdepends_recipe": "",
+  "replaces": "",
+  "repo_name": "zdfmediathek",
+  "rrecommends": "",
+  "rreplaces": ""
+}

@@ -20,7 +20,6 @@ from Screens.Screen import Screen
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
-from six import ensure_str
 from urllib.parse import quote_plus
 from twisted.internet.reactor import callInThread
 from Tools.Downloader import downloadWithProgress
@@ -39,6 +38,12 @@ addFont(FONT, "SRegular", 100, False)
 API_URL = "https://zdf-prod-futura.zdf.de/mediathekV2/"
 ColorList = [("default,#1a104485,#3D104485,#1aC0C0C0", "Trans-BrightBlue"), ("default,#050a1232,#1502050e,#05192d7c", "Trans-DarkBlue"), ("default,#05000000,#15000000,#606060", "Trans-BlackGray"), ("default,#05000000,#15000000,#ffff00", "Trans-BlackYellow"), ("default,#1a746962,#1502050e,#1a746962", "Trans-BrownBlue"), ("MiniTV,#104485,#0c366a,#C0C0C0", "BrightBlue MiniTV"), ("MiniTV,#0a1232,#02050e,#192d7c", "DarkBlue MiniTV"), ("MiniTV,#000000,#080808,#606060", "BlackGray MiniTV"), ("MiniTV,#000000,#080808,#ffff00", "BlackYellow MiniTV"), ("MiniTV,#746962,#02050e,#746962", "BrownBlue MiniTV")]
 config.plugins.ZDF.SkinColor = ConfigSelection(default="default,#050a1232,#1502050e,#05192d7c", choices=ColorList)
+
+
+def ensure_str(s):
+	if isinstance(s, bytes):
+		return s.decode("utf-8")
+	return s
 
 
 def readskin():

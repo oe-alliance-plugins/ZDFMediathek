@@ -21,7 +21,7 @@ from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from six import ensure_str
-from six.moves.urllib.parse import quote_plus
+from urllib.parse import quote_plus
 from twisted.internet.reactor import callInThread
 from Tools.Downloader import downloadWithProgress
 config.plugins.ZDF = ConfigSubsection()

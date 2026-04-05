@@ -4,19 +4,18 @@ from datetime import datetime, timedelta
 from json import loads
 import xml.etree.ElementTree as Et
 import requests
-from Components.ActionMap import ActionMap
-from Components.ConfigList import ConfigListScreen
-from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigDirectory, ConfigSelection, ConfigYesNo
+from ActionMap import ActionMap
+from Components.config import config, ConfigSubsection, ConfigDirectory, ConfigSelection, ConfigYesNo
 from Components.FileList import FileList
 from Components.Pixmap import Pixmap
 from Components.ProgressBar import ProgressBar
 from Components.ScrollLabel import ScrollLabel
-from Components.Sources.StaticText import StaticText
 from Components.Sources.List import List
 from enigma import eServiceReference, ePicLoad, gPixmapPtr, getDesktop, addFont
 from Screens.InfoBarGenerics import setResumePoint
 from Screens.InfoBar import MoviePlayer
 from Screens.Screen import Screen
+from Screens.Setup import Setup
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -512,48 +511,33 @@ class MoviePlayer2(MoviePlayer):
         self.close()
 
 
-class ZDFConfigScreen(ConfigListScreen, Screen):
+class ZDFConfigScreen(Setup):
     def __init__(self, session):
-        Screen.__init__(self, session)
-        self.title = "Einstellungen"
-        self.session = session
-        self.skinName = ["Setup"]
-        self["key_red"] = StaticText("Abbrechen")
-        self["key_green"] = StaticText("Speichern")
-        self["setupActions"] = ActionMap(["SetupActions", "ColorActions"], {"cancel": self.cancel, "red": self.cancel, "ok": self.ok, "green": self.save}, -2)
-        ConfigListScreen.__init__(self, [], session=session)
-        self.ConfigList()
+        Setup.__init__(self, session, "zdfmediathek", plugin="Extensions/ZDFMediathek", PluginLanguageDomain="ZDFMediathek")
 
-    def ConfigList(self):
-        self["config"].list = [getConfigListEntry("Skin", config.plugins.ZDF.SkinColor), getConfigListEntry("Download-Verzeichnis:", config.plugins.ZDF.savetopath), getConfigListEntry("Untertitle Downloaden", config.plugins.ZDF.UT_DL), getConfigListEntry("Cover Downloaden", config.plugins.ZDF.COVER_DL), getConfigListEntry("Letzte Abspielposition speichern", config.plugins.ZDF.SaveResumePoint)]
-
-    def save(self):
-        self.keySave()
-        self.close()
-
-    def cancel(self):
-        self.close()
-
-    def ok(self):
+    def keySelect(self):
         if self["config"].getCurrent()[1] == config.plugins.ZDF.savetopath:
-            DLdir = config.plugins.ZDF.savetopath.value
-            self.session.openWithCallback(self.DL_Path, DirBrowser, DLdir)
+            self.session.openWithCallback(self.DirectoryBrowserClosed, DirBrowser, config.plugins.ZDF.savetopath.value)
+            return
+        Setup.keySelect(self)
 
-    def DL_Path(self, res):
-        self["config"].setCurrentIndex(0)
-        if res:
-            config.plugins.ZDF.savetopath.value = res
+    def DirectoryBrowserClosed(self, path):
+        if path:
+            config.plugins.ZDF.savetopath.value = path
+            self["config"].invalidateEntry(self["config"].getCurrentIndex())
 
 
 class DirBrowser(Screen):
-    def __init__(self, session, DLdir):
+    def __init__(self, session, ddir):
         Screen.__init__(self, session)
         self.skinName = ["FileBrowser"]
+        from Components.Sources.StaticText import StaticText
+        from Components.ActionMap import ActionMap
         self["key_red"] = StaticText("Abbrechen")
         self["key_green"] = StaticText("Speichern")
-        if not path.exists(DLdir):
-            DLdir = "/"
-        self.filelist = FileList(DLdir, showFiles=False)
+        if not path.exists(ddir):
+            ddir = "/"
+        self.filelist = FileList(ddir, showFiles=False)
         self["filelist"] = self.filelist
         self["FilelistActions"] = ActionMap(["SetupActions", "ColorActions"], {"cancel": self.cancel, "red": self.cancel, "ok": self.ok, "green": self.save}, -2)
 

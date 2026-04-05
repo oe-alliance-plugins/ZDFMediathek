@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setupxml>
+	<setup key="zdfmediathek" title="ZDF Mediathek Setup">
+		<item level="0" text="Skin" description="Choose a skin theme">config.plugins.ZDF.SkinColor</item>
+		<item level="0" text="Download-Verzeichnis" description="Directory for downloads">config.plugins.ZDF.savetopath</item>
+		<item level="0" text="Untertitle Downloaden" description="Download subtitles with videos">config.plugins.ZDF.UT_DL</item>
+		<item level="0" text="Cover Downloaden" description="Download cover images">config.plugins.ZDF.COVER_DL</item>
+		<item level="0" text="Letzte Abspielposition speichern" description="Save resume point when playing">config.plugins.ZDF.SaveResumePoint</item>
+	</setup>
+</setupxml>

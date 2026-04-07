@@ -5,9 +5,9 @@ from . import zdf
 
 
 def main(session, **kwargs):
-    reload(zdf)
-    session.open(zdf.ZDFMediathek)
+	reload(zdf)
+	session.open(zdf.ZDFMediathek)
 
 
 def Plugins(**kwargs):
-    return PluginDescriptor(name="ZDF Mediathek", description="ZDF Mediathek Plugin für Enigma2", where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU], icon="logo.png", fnc=main)
+	return PluginDescriptor(name="ZDF Mediathek", description="ZDF Mediathek Plugin für Enigma2", where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU], icon="logo.png", fnc=main)

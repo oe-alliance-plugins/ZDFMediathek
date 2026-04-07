@@ -4,13 +4,15 @@ from datetime import datetime, timedelta
 from json import loads
 import xml.etree.ElementTree as Et
 import requests
-from ActionMap import ActionMap
+
+from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSubsection, ConfigDirectory, ConfigSelection, ConfigYesNo
 from Components.FileList import FileList
 from Components.Pixmap import Pixmap
 from Components.ProgressBar import ProgressBar
 from Components.ScrollLabel import ScrollLabel
 from Components.Sources.List import List
+from Components.Sources.StaticText import StaticText
 from enigma import eServiceReference, ePicLoad, gPixmapPtr, getDesktop, addFont
 from Screens.InfoBarGenerics import setResumePoint
 from Screens.InfoBar import MoviePlayer
@@ -531,8 +533,6 @@ class DirBrowser(Screen):
     def __init__(self, session, ddir):
         Screen.__init__(self, session)
         self.skinName = ["FileBrowser"]
-        from Components.Sources.StaticText import StaticText
-        from Components.ActionMap import ActionMap
         self["key_red"] = StaticText("Abbrechen")
         self["key_green"] = StaticText("Speichern")
         if not path.exists(ddir):
